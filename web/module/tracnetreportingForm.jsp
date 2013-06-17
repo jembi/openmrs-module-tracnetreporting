@@ -2,15 +2,6 @@
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <openmrs:htmlInclude file="/scripts/calendar/calendar.js" />
 
-<!--  
-<openmrs:require privilege="View TRACNet Reporting" otherwise="/login.htm" redirect="/module/@MODULE_ID@/tracnetreportingForm.list" /> 
-<openmrs:htmlInclude file="/moduleResources/@MODULE_ID@/scripts/jquery-1.3.2.js" />
-<openmrs:htmlInclude file="/moduleResources/@MODULE_ID@/styles/ui.all.css" />
-<openmrs:htmlInclude file="/moduleResources/@MODULE_ID@/styles/demos.css" />
-<openmrs:htmlInclude file="/moduleResources/@MODULE_ID@/scripts/ui.core.js" />
-<openmrs:htmlInclude file="/moduleResources/@MODULE_ID@/scripts/ui.accordion.js" />
-<openmrs:htmlInclude file="/moduleResources/@MODULE_ID@/scripts/ui.tabs.js" />
--->
 
 <script type="text/javascript">
 	var $ = jQuery.noConflict();
