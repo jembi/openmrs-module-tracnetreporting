@@ -2382,38 +2382,40 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 		try {
 
 			SQLQuery query1 = session
-					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
-							+ "inner join person pe on pg.patient_id = pe.person_id "
-							+ "inner join patient pa on pg.patient_id = pa.patient_id "
-							+ "inner join orders ord on pg.patient_id = ord.patient_id "
-							+ "inner join obs o on pg.patient_id = o.person_id "
-							+ "inner join drug_order do on ord.order_id = do.order_id "
-							/*+ "inner join drug d on do.drug_inventory_id = d.drug_id "*/
-							+ "where DATE_FORMAT(FROM_DAYS(TO_DAYS('"
-							+ endDate
-							+ "') - TO_DAYS(pe.birthdate)), '%Y')+0 <= 14 "
-							+ " and ord.concept_id IN ("
-							+ GlobalProperties.gpGetListOfARVsDrugs()
-							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
-							+ endDate
-							+ "' and pg.date_enrolled <= '"
-							+ endDate
-							+ "' and o.concept_id = "
-							+ Integer.parseInt(GlobalProperties
-									.gpGetExitFromCareConceptId())
-							+ " and o.value_coded = "
-							+ Integer.parseInt(GlobalProperties
-									.gpGetExitFromCareDiedConceptId())
-							+ " and ord.discontinued_date is not null and ord.discontinued_reason = "
-							+ Integer.parseInt(GlobalProperties
-									.gpGetExitFromCareDiedConceptId())
-							+ " and pg.program_id =  "
-							+ Integer.parseInt(GlobalProperties
-									.gpGetHIVProgramId()));
-
-			List<Integer> patientIds1 = query1.list();
-
+			.createSQLQuery("select distinct pg.patient_id from patient_program pg "
+					+ "inner join person pe on pg.patient_id = pe.person_id "
+					+ "inner join patient pa on pg.patient_id = pa.patient_id "
+					+ "inner join orders ord on pg.patient_id = ord.patient_id "
+					+ "inner join obs o on pg.patient_id = o.person_id "
+					+ "inner join drug_order do on ord.order_id = do.order_id "
+					/*
+					 * +
+					 * "inner join drug d on do.drug_inventory_id = d.drug_id "
+					 */
+					+ "where DATE_FORMAT(FROM_DAYS(TO_DAYS('"
+					+ endDate
+					+ "') - TO_DAYS(pe.birthdate)), '%Y')+0 <= 14 "
+					+ " and ord.concept_id IN ("
+					+ GlobalProperties.gpGetListOfARVsDrugs()
+					+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
+					+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+					+ endDate
+					+ "' and pg.date_enrolled <= '"
+					+ endDate
+					+ "' and o.concept_id = "
+					+ Integer.parseInt(GlobalProperties
+							.gpGetExitFromCareConceptId())
+					+ " and o.value_coded = "
+					+ Integer.parseInt(GlobalProperties
+							.gpGetExitFromCareDiedConceptId())
+					/*+ " and ord.discontinued_date is not null and ord.discontinued_reason = "
+					+ Integer.parseInt(GlobalProperties
+							.gpGetExitFromCareDiedConceptId())*/
+					+ " and pg.program_id =  "
+					+ Integer.parseInt(GlobalProperties
+							.gpGetHIVProgramId()));
+log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
+	List<Integer> patientIds1 = query1.list();
 			for (Integer patientId : patientIds1) {
 
 				SQLQuery queryDate = session
@@ -2442,7 +2444,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 		return patients;
 	}
 

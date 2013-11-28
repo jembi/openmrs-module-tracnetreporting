@@ -5888,7 +5888,6 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 	@Override
 	public int arvPedsDiedThisMonth(String startDate, String endDate)
 			throws ParseException {
-
 		int indicator = 0;
 
 		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
@@ -5927,27 +5926,26 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ " and o.value_coded = "
 							+ Integer.parseInt(GlobalProperties
 									.gpGetExitFromCareDiedConceptId())
-							+ " and ord.discontinued_date is not null and ord.discontinued_reason = "
+							/*+ " and ord.discontinued_date is not null and ord.discontinued_reason = "
 							+ Integer.parseInt(GlobalProperties
-									.gpGetExitFromCareDiedConceptId())
+									.gpGetExitFromCareDiedConceptId())*/
 							+ " and pg.program_id =  "
 							+ Integer.parseInt(GlobalProperties
 									.gpGetHIVProgramId()));
-
+log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 			List<Integer> patientIds1 = query1.list();
 
 			for (Integer patientId : patientIds1) {
 
 				SQLQuery queryDate = session
 						.createSQLQuery("select cast(obs_datetime as DATE) from obs where concept_id = "
-								+ Integer.parseInt(GlobalProperties
-										.gpGetExitFromCareConceptId())
-								+ " and value_coded= "
-								+ Integer.parseInt(GlobalProperties
+								+ Integer.parseInt(GlobalProperties.gpGetExitFromCareConceptId())
+								+ " and value_coded= "	+ Integer.parseInt(GlobalProperties
 										.gpGetExitFromCareDiedConceptId())
 								+ " and (select(cast(obs_datetime as DATE))) is not null and voided = 0 and person_id = "
 								+ patientId);
-
+				
+				log.info(">>>>>>>>>>>>>>>>>>>>>arvped died by personid >>in 19.x>>>"+queryDate.toString());
 				List<Date> dateOfDeath = queryDate.list();
 
 				if (dateOfDeath.size() != 0)
@@ -5965,7 +5963,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 		}
 
 		return indicator;
-	}
+		
+		
+			}
 
 	/**
 	 * Number of ARV patients (age 15+) who have died this month
@@ -20947,9 +20947,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ " and o.value_coded = "
 							+ Integer.parseInt(GlobalProperties
 									.gpGetExitFromCareDiedConceptId())
-							+ " and ord.discontinued_date is not null and ord.discontinued_reason = "
+							/*+ " and ord.discontinued_date is not null and ord.discontinued_reason = "
 							+ Integer.parseInt(GlobalProperties
-									.gpGetExitFromCareDiedConceptId())
+									.gpGetExitFromCareDiedConceptId())*/
 							+ " and pg.program_id =  "
 							+ Integer.parseInt(GlobalProperties
 									.gpGetHIVProgramId()));
