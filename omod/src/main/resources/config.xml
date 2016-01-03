@@ -4,10 +4,10 @@
 <module configVersion="1.2">
 
 	<!-- TracNetReporting Module Properties -->
-	<id>tracnetreporting</id>
-	<name>TracNet Reporting</name>
-	<version>0.1.0.27</version>
-	<package>org.openmrs.module.@MODULE_ID@</package>
+	<id>@MODULE_ID@</id>
+	<name>@MODULE_NAME@</name>
+	<version>@MODULE_VERSION@</version>
+	<package>@MODULE_PACKAGE@</package>
 	<author>Kamonyo Mugabo</author>
 	<description>
 		TracNet Reporting Module. Useful for TracNet monthly reporting.
