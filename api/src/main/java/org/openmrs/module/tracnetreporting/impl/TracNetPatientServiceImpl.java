@@ -37,10 +37,10 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.openmrs.Person;
 import org.openmrs.api.context.Context;
+import org.openmrs.api.db.hibernate.DbSession;
+import org.openmrs.api.db.hibernate.DbSessionFactory;
 import org.openmrs.module.tracnetreporting.GlobalProperties;
 import org.openmrs.module.tracnetreporting.service.ConstantValues;
 import org.openmrs.module.tracnetreporting.service.TracNetPatientService;
@@ -53,13 +53,13 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 	@SuppressWarnings("unused")
 	private final Log log = LogFactory.getLog(getClass());
 
-	private SessionFactory sessionFactory2;
+	private DbSessionFactory sessionFactory2;
 
 	/**
 	 * @param sessionFactory
 	 *            the sessionFactory to set
 	 */
-	public void setSessionFactory2(SessionFactory sessionFactory2) {
+	public void setSessionFactory2(DbSessionFactory sessionFactory2) {
 		// TracNetIndicatorService service =
 		// Context.getService(TracNetIndicatorService.class);
 		this.sessionFactory2 = sessionFactory2;
@@ -68,7 +68,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 	/**
 	 * @return the sessionFactory
 	 */
-	public SessionFactory getSessionFactory2() {
+	public DbSessionFactory getSessionFactory2() {
 		return sessionFactory2;
 	}
 
@@ -131,7 +131,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -264,7 +264,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			// SQLQuery query1 = session
 			// .createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -387,7 +387,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join person pe on pg.patient_id = pe.person_id "
@@ -465,7 +465,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -545,7 +545,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -626,7 +626,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -716,7 +716,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -835,7 +835,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -957,7 +957,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 	try {
 		
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 
 			SQLQuery query1 = session
@@ -1116,7 +1116,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -1224,7 +1224,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -1334,7 +1334,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -1442,7 +1442,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -1536,7 +1536,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -1632,7 +1632,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -1710,7 +1710,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -1891,7 +1891,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -2049,7 +2049,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -2182,7 +2182,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -2285,7 +2285,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -2377,7 +2377,7 @@ public class TracNetPatientServiceImpl implements TracNetPatientService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -2472,7 +2472,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -2608,7 +2608,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 		@SuppressWarnings("unused")
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
@@ -2745,7 +2745,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -2848,7 +2848,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -2941,7 +2941,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		ArrayList<Person> patients = new ArrayList<Person>();
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -3078,7 +3078,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date oneYearBeforeEndDate = df.parse(addDaysToDate(endDate, -12));
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -3240,7 +3240,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 		@SuppressWarnings("unused")
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -3377,7 +3377,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 		@SuppressWarnings("unused")
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -3514,7 +3514,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date oneYearBeforeEndDate = df.parse(addDaysToDate(endDate, -12));
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -3673,7 +3673,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -3806,7 +3806,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -3938,7 +3938,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -4070,7 +4070,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -4202,7 +4202,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -4334,7 +4334,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -4457,7 +4457,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -4555,7 +4555,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -4654,7 +4654,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -4752,7 +4752,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -4849,7 +4849,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -4983,7 +4983,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -5083,7 +5083,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -5182,7 +5182,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -5315,7 +5315,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -5448,7 +5448,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -5581,7 +5581,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -5714,7 +5714,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -5869,7 +5869,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -6003,7 +6003,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -6137,7 +6137,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -6280,7 +6280,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -6389,7 +6389,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -6566,7 +6566,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			double weight;
 
@@ -6821,7 +6821,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		List<Integer> patientIdsList = new ArrayList<Integer>();
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -7012,7 +7012,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -7201,7 +7201,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
 							+ "inner join obs ob on pe.person_id = ob.person_id "
@@ -7339,7 +7339,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		// try {
 		//
-		// Session session = getSessionFactory2().getCurrentSession();
+		// DbSession session = getSessionFactory2().getCurrentSession();
 		// SQLQuery query = session
 		// .createSQLQuery("select distinct pg.patient_id from patient_program pg "
 		// + "inner join obs ob on pg.patient_id = ob.person_id "
@@ -7504,7 +7504,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -7647,7 +7647,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		List<Integer> patientIdsList = new ArrayList<Integer>();
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -7778,7 +7778,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -7951,7 +7951,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 		//
 		// Date newStartDate = df.parse(startDate);
 		//
-		// Session session = getSessionFactory2().getCurrentSession();
+		// DbSession session = getSessionFactory2().getCurrentSession();
 		// SQLQuery query = session
 		// .createSQLQuery("select distinct pg.patient_id from patient_program pg "
 		// + "inner join obs ob on pg.patient_id = ob.person_id "
@@ -8040,7 +8040,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -8159,7 +8159,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
 							+ "inner join obs ob on pe.person_id = ob.person_id "
@@ -8305,7 +8305,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -8466,7 +8466,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -8621,7 +8621,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -8713,7 +8713,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
 							+ "inner join obs ob on pe.person_id = ob.person_id "
@@ -8821,7 +8821,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
 							+ "inner join obs ob on pe.person_id = ob.person_id "
@@ -8913,7 +8913,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -9100,7 +9100,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 		Date newStartDate = df.parse(startDate);
 
 		try {
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -9216,7 +9216,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -9342,7 +9342,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -9516,7 +9516,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
@@ -9618,7 +9618,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
@@ -9784,7 +9784,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		// try {
 		//
-		// Session session = getSessionFactory2().getCurrentSession();
+		// DbSession session = getSessionFactory2().getCurrentSession();
 		// SQLQuery query = session
 		// .createSQLQuery("select distinct rel.person_a from relationship rel "
 		// + "inner join person pe on rel.person_a = pe.person_id "
@@ -9912,7 +9912,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		// try {
 		//
-		// Session session = getSessionFactory2().getCurrentSession();
+		// DbSession session = getSessionFactory2().getCurrentSession();
 		// SQLQuery query = session
 		// .createSQLQuery("select distinct rel.person_a from relationship rel "
 		// + "inner join person pe on rel.person_a = pe.person_id "
@@ -10073,7 +10073,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -10260,7 +10260,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		ArrayList<Integer> patientsNotLostToFollowUp = new ArrayList<Integer>();
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -10701,7 +10701,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -11081,7 +11081,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query = session
@@ -11443,7 +11443,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query = session
@@ -11805,7 +11805,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query = session
@@ -12167,7 +12167,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query = session
@@ -12624,7 +12624,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery query = session
@@ -13084,7 +13084,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -13562,7 +13562,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -13928,7 +13928,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 		Date newStartDate = df.parse(startDate);
 
 		try {
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -14120,7 +14120,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -14305,7 +14305,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> womenHivPosExpectedFpAtFacility(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleWithHIVPosIds = session
 				.createSQLQuery(
@@ -14370,7 +14370,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	@Override
 	public List<Person> womenHivPosSeenInFp(String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleWithHIVPosIds = session
 				.createSQLQuery(
@@ -14439,7 +14439,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 			String endDate) {
 
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 		List<Integer> personFemaleWithHIVPosIds = session
 				.createSQLQuery(
 						"SELECT distinct p.person_id from person p inner join obs o on p.person_id=o.person_id where p.gender='F' and  o.concept_id='"
@@ -14520,7 +14520,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> womenHivPosReceivingModernContraceptive(
 			String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 		List<Integer> personFemaleWithHIVPosIds = session
 				.createSQLQuery(
 						"SELECT distinct p.person_id from person p inner join obs o on p.person_id=o.person_id where p.gender='F' and  o.concept_id='"
@@ -14596,7 +14596,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> womenHivPosRefferedForFp(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 		List<Integer> personFemaleWithHIVPosIds = session
 				.createSQLQuery(
 						"SELECT distinct p.person_id from person p inner join obs o on p.person_id=o.person_id where p.gender='F' and  o.concept_id='"
@@ -14652,7 +14652,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	@Override
 	public List<Person> couplesCounseledTested(String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personCoupledIds = session
 				.createSQLQuery(
@@ -14690,7 +14690,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> discordantCouples2(String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> coupleCounseledTestedIds = session
 				.createSQLQuery(
@@ -14771,7 +14771,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> femaleHivPosMoreThan25(String startDate, String endDate) {
 
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -14825,7 +14825,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	@Override
 	public List<Person> femaleHivPosUnder15to24(String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -14887,7 +14887,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> femaleHivPosUnderFifteen(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -14941,7 +14941,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	@Override
 	public List<Person> maleHivPosMoreThan25(String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -14996,7 +14996,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	@Override
 	public List<Person> maleHivPosUnder15to24(String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -15057,7 +15057,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	@Override
 	public List<Person> maleHivPosUnderFifteen(String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -15115,7 +15115,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newFemale15To24TestReceiveRes(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -15173,7 +15173,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newFemaleFifteenTo24CounseledTested(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -15227,7 +15227,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newFemaleMore25CounseledTested(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -15276,7 +15276,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newFemaleMore25TestReceiveRes(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -15332,7 +15332,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newFemaleUnderFifteenCounseledTested(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -15381,7 +15381,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newFemaleUnderFifteenTestReceiveRes(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -15434,7 +15434,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newMale15To24TestReceiveRes(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -15494,7 +15494,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newMaleFifteenTo24CounseledTested(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -15549,7 +15549,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newMaleMore25CounseledTested(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -15598,7 +15598,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newMaleMore25TestReceiveRes(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -15652,7 +15652,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newMaleUnderFifteenCounseledTested(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -15701,7 +15701,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newMaleUnderFifteenTestReceiveRes(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -15759,7 +15759,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> female15To24CounseledThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -15814,7 +15814,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> female15To24HivPosThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -15877,7 +15877,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> female15To24HivResThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -15937,7 +15937,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> femaleMoreThan25CounseledThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -15986,7 +15986,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> femaleMoreThan25HivPosThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -16044,7 +16044,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> femaleMoreThan25HivResThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -16100,7 +16100,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> femaleUnderFifteenCounseledThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -16151,7 +16151,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> femaleUnderFifteenHivPosThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -16209,7 +16209,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> femaleUnderFifteenHivResThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -16260,7 +16260,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> male15To24CounseledThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -16315,7 +16315,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> male15To24HivPosThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -16375,7 +16375,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> male15To24HivResThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -16436,7 +16436,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> maleMoreThan25CounseledThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -16487,7 +16487,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> maleMoreThan25HivPosThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -16543,7 +16543,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> maleMoreThan25HivResThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -16595,7 +16595,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> maleUnderFifteenCounseledThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -16644,7 +16644,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> maleUnderFifteenHivPosThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -16700,7 +16700,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> maleUnderFifteenHivResThroughPit(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -16755,7 +16755,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newAtRiskHivOccupExpo3MonthAfterPep(String startDate,
 			String endDate) {
 		List<Person> patients = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		List<Integer> personEnrolledInPepIds = session
 				.createSQLQuery(
@@ -16846,7 +16846,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 			String endDate) {
 		ArrayList<Person> patients = new ArrayList<Person>();
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 		List<Integer> personEnrolledInPepPRogramAtRiskOfOcupationExposureIds = session
 				.createSQLQuery(
 						"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -16923,7 +16923,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 			String endDate) {
 		ArrayList<Person> patients = new ArrayList<Person>();
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 		List<Integer> personEnrolledInPepPRogramAtRiskOfOcupationExposureIds = session
 				.createSQLQuery(
 						"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -17020,7 +17020,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newAtRiskHivOtherNoneOccupationExposure(
 			String startDate, String endDate) {
 		ArrayList<Person> patients = new ArrayList<Person>();
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 		List<Integer> personEnrolledInPepPRogramAtRiskOfNonOcupationExposureIds = session
 				.createSQLQuery(
 						"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -17097,7 +17097,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 			String startDate, String endDate) {
 		ArrayList<Person> patients = new ArrayList<Person>();
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 		List<Integer> personEnrolledInPepPRogramAtRiskOfNonOcuppationalExposureIds = session
 				.createSQLQuery(
 						"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -17183,7 +17183,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 	public List<Person> newAtRiskHivRapeAssault(String startDate, String endDate) {
 		ArrayList<Person> patients = new ArrayList<Person>();
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 		List<Integer> personEnrolledInPepPRogramAtRiskOfOcupationExposureIds = session
 				.createSQLQuery(
 						"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -17263,7 +17263,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 		 * beforeThreeMonthOfStartDate=cal.getTime();
 		 */
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 		List<Integer> patientInProgramIds = session
 				.createSQLQuery(
 						"SELECT DISTINCT p.person_id from person p inner join obs o on p.person_id=o.person_id where p.voided=false and o.concept_id='"
@@ -17304,7 +17304,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 			String endDate) {
 		ArrayList<Person> patients = new ArrayList<Person>();
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 		List<Integer> personEnrolledInPepPRogramAtRiskOfRapeAssaultIds = session
 				.createSQLQuery(
 						"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -17404,7 +17404,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 	try {
 		
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 
 			SQLQuery query1 = session
@@ -17558,7 +17558,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -17688,7 +17688,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -17778,7 +17778,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -17910,7 +17910,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -18068,7 +18068,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -18226,7 +18226,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -18339,7 +18339,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		ArrayList<Integer> patientsNotLostToFollowUp = new ArrayList<Integer>();
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -18492,7 +18492,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -18611,7 +18611,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -18726,7 +18726,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		ArrayList<Integer> patientsNotLostToFollowUp = new ArrayList<Integer>();
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -18890,7 +18890,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		ArrayList<Integer> patientsNotLostToFollowUp = new ArrayList<Integer>();
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 
@@ -19092,7 +19092,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -19231,7 +19231,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -19491,7 +19491,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery queryPatientsOnCotrimo = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -19645,7 +19645,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		try {
 
-			Session session = getSessionFactory2().getCurrentSession();
+			DbSession session = getSessionFactory2().getCurrentSession();
 
 			SQLQuery queryPatientsOnCotrimo = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -19797,7 +19797,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery queryPatientsOnCotrimo = session
@@ -19896,7 +19896,7 @@ log.info(">>>>>>>>>>patient size?P?P?P?P?P?P?P"+patients.size());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory2().getCurrentSession();
+		DbSession session = getSessionFactory2().getCurrentSession();
 
 		try {
 			SQLQuery queryPatientsOnCotrimo = session

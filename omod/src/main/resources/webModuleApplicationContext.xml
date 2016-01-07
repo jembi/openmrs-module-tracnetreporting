@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+	<!-- Beans to add to the current Application context definition -->
+
+<beans>
+
+	<!-- SessionFactory -->
+	
+	<!-- /SessionFactory -->
+
+	<!-- Controllers -->
+
+	<bean id="tracnetreportingUrlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="module/@MODULE_ID@/tracnetreportingForm.list">tracnetreportingFormController</prop>
+				<prop key="module/@MODULE_ID@/tracnetpatientList.list">tracnetpatientViewController</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<!--
+		<bean id="tracnetreportingFormController"
+		class="@MODULE_PACKAGE@.web.controller.TracNetReportingViewController">
+		<property name="commandName"> <value>indicatorsList</value>
+		</property> <property name="formView">
+		<value>/module/@MODULE_ID@/tracnetreportingForm</value> </property>
+		<property name="successView"> <value>tracnetreportingForm.list</value>
+		</property> </bean>
+	-->
+
+	<bean id="tracnetreportingFormController"
+		class="@MODULE_PACKAGE@.web.controller.TracNetReportingFormController">
+		<property name="viewName" value="module/@MODULE_ID@/tracnetreportingForm" />
+	</bean>
+	
+	<bean id="tracnetpatientViewController"
+		class="@MODULE_PACKAGE@.web.controller.TracNetPatientViewController">
+		<property name="viewName" value="module/@MODULE_ID@/tracnetpatientsList" />
+	</bean>
+
+	<bean class="@MODULE_PACKAGE@.service.ContextProvider" />
+
+	<!-- /Controllers -->
+</beans>

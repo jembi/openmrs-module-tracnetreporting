@@ -13,7 +13,7 @@
  */
 package org.openmrs.module.tracnetreporting.service;
 
-import org.hibernate.SessionFactory;
+import org.openmrs.api.db.hibernate.DbSessionFactory;
 
 /**
  *
@@ -24,6 +24,6 @@ public interface SettingSessionFactoryService {
 	
 	//	public List<Object[]> executeHqlListOfIndicators(String sqlQuery);
 	
-	public SessionFactory getStaticSessionFactory();
+	public DbSessionFactory getStaticSessionFactory();
 	
 }

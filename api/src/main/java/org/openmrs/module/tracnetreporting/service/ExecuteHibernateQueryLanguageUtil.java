@@ -16,34 +16,34 @@ package org.openmrs.module.tracnetreporting.service;
 import java.util.List;
 
 import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.openmrs.api.db.hibernate.DbSession;
+import org.openmrs.api.db.hibernate.DbSessionFactory;
 
 /**
  *
  */
 public class ExecuteHibernateQueryLanguageUtil implements SettingSessionFactoryService {
 	
-	private static SessionFactory sessionFactory;
+	private static DbSessionFactory sessionFactory;
 	
 	/**
 	 * @param sessionFactory the sessionFactory to set
 	 */
-	public void setSessionFactory(SessionFactory sessionFactory) {
+	public void setSessionFactory(DbSessionFactory sessionFactory) {
 		ExecuteHibernateQueryLanguageUtil.sessionFactory = sessionFactory;
 	}
 	
 	/**
 	 * @return the sessionFactory
 	 */
-	public static SessionFactory getSessionFactory() {
+	public static DbSessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static List<Object[]> executeHqlIndicators(String sqlQuery) {
 		
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		SQLQuery query = session.createSQLQuery(sqlQuery);
 		
 		return query.list();
@@ -52,7 +52,7 @@ public class ExecuteHibernateQueryLanguageUtil implements SettingSessionFactoryS
 	@SuppressWarnings("unchecked")
 	public static List<Integer> executeHqlPatients(String sqlQuery) {
 		
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		SQLQuery query = session.createSQLQuery(sqlQuery);
 		
 		return query.list();
@@ -62,7 +62,7 @@ public class ExecuteHibernateQueryLanguageUtil implements SettingSessionFactoryS
 	 * @see org.openmrs.module.tracnetreporting.service.SettingSessionFactoryService#getStaticSessionFactory()
 	 */
 	@Override
-	public SessionFactory getStaticSessionFactory() {
+	public DbSessionFactory getStaticSessionFactory() {
 		
 		return ExecuteHibernateQueryLanguageUtil.sessionFactory;
 	}

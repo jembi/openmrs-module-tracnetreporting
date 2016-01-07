@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,11 +38,11 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.openmrs.Patient;
 import org.openmrs.Person;
 import org.openmrs.api.context.Context;
+import org.openmrs.api.db.hibernate.DbSession;
+import org.openmrs.api.db.hibernate.DbSessionFactory;
 import org.openmrs.module.tracnetreporting.GlobalProperties;
 import org.openmrs.module.tracnetreporting.service.ConstantValues;
 import org.openmrs.module.tracnetreporting.service.TracNetIndicatorService;
@@ -54,20 +55,20 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 	private Log log = LogFactory.getLog(getClass());
 
-	private SessionFactory sessionFactory;
+	private DbSessionFactory sessionFactory;
 
 	/**
 	 * @param sessionFactory
 	 *            the sessionFactory to set
 	 */
-	public void setSessionFactory(SessionFactory sessionFactory) {
+	public void setSessionFactory(DbSessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 
 	/**
 	 * @return the sessionFactory
 	 */
-	public SessionFactory getSessionFactory() {
+	public DbSessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
 
@@ -81,7 +82,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select  cast(MAX(obs.value_datetime) as DATE) from obs where obs.concept_id = "
 							+ ConstantValues.NEXT_SCHEDULED_VISIT
@@ -162,7 +163,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 		boolean patientIsStarting = false;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 			Date startDate = df.parse(startingDate);
 			Date endDate = df.parse(endingDate);
@@ -246,7 +247,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 		// Date newStartDate = df.parse(startDate);
 		// Date threeMonthsBeforeStartDate = addDaysToDate(startDate, -92);
 		//
-		// Session session = getSessionFactory().getCurrentSession();
+		// DbSession session = getSessionFactory().getCurrentSession();
 		// List<Integer> patientIds = session
 		// .createSQLQuery(
 		// "select distinct pg.patient_id from patient_program pg "
@@ -329,7 +330,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 	 */
 
 	@SuppressWarnings("unused")
-	private List<Integer> isPatientsOnArvsThisMonth(Session session,
+	private List<Integer> isPatientsOnArvsThisMonth(DbSession session,
 			String startDate, String endDate) {
 
 		List<Integer> patientIds = new ArrayList<Integer>();
@@ -369,7 +370,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 	}
 
 	@SuppressWarnings( { "unused" })
-	private List<Integer> PatientsOnArvsThisMonth(Session session,
+	private List<Integer> PatientsOnArvsThisMonth(DbSession session,
 			String startDate, String endDate, String age) {
 
 		List<Integer> patientIds = new ArrayList<Integer>();
@@ -459,7 +460,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -564,7 +565,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -668,7 +669,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -770,7 +771,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -872,7 +873,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		/* try { */
 
@@ -1018,7 +1019,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		/* try { */
 
@@ -1155,7 +1156,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -1229,7 +1230,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 		/*
 		 * try {
 		 * 
-		 * Session session = getSessionFactory().getCurrentSession();
+		 * DbSession session = getSessionFactory().getCurrentSession();
 		 * 
 		 * SQLQuery query1 = session
 		 * .createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -1291,7 +1292,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -1365,7 +1366,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -1440,7 +1441,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join person pe on pg.patient_id = pe.person_id "
@@ -1511,7 +1512,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -1596,7 +1597,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		// try {
 
@@ -1722,7 +1723,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -1816,7 +1817,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -1917,7 +1918,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -2043,7 +2044,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -2276,7 +2277,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -2406,7 +2407,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -2532,7 +2533,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -2660,7 +2661,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -2789,7 +2790,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -2940,7 +2941,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -3069,7 +3070,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -3198,7 +3199,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -3326,7 +3327,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -3477,7 +3478,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try
 
@@ -3608,7 +3609,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -3704,7 +3705,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -3799,7 +3800,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -3895,7 +3896,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -3988,7 +3989,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -4128,7 +4129,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -4265,7 +4266,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -4401,7 +4402,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -4543,7 +4544,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -4691,7 +4692,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -4794,7 +4795,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -4893,7 +4894,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -5037,7 +5038,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -5180,7 +5181,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -5323,7 +5324,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -5463,7 +5464,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -5610,7 +5611,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -5754,7 +5755,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -5896,7 +5897,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -5988,7 +5989,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -6077,7 +6078,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		ArrayList<Integer> patientsNotLostToFollowUp = new ArrayList<Integer>();
 
@@ -6210,7 +6211,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		ArrayList<Integer> patientsNotLostToFollowUp = new ArrayList<Integer>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -6344,7 +6345,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date oneYearBeforeEndDate = df.parse(addDaysToDate(endDate, -12));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -6507,7 +6508,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date oneYearBeforeEndDate = df.parse(addDaysToDate(endDate, -12));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -6665,7 +6666,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -6754,7 +6755,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -6844,7 +6845,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -6945,7 +6946,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -7055,7 +7056,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -7160,7 +7161,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -7327,7 +7328,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		//
 		// Date newStartDate = df.parse(startDate);
 		//
-		// Session session = getSessionFactory().getCurrentSession();
+		// DbSession session = getSessionFactory().getCurrentSession();
 		//
 		// int weight;
 		//
@@ -7578,7 +7579,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		int indicator = 0;
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -7762,7 +7763,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -7949,7 +7950,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
 							+ "inner join obs ob on pe.person_id = ob.person_id "
@@ -8088,7 +8089,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		// try {
 		//
-		// Session session = getSessionFactory().getCurrentSession();
+		// DbSession session = getSessionFactory().getCurrentSession();
 		// SQLQuery query = session
 		// .createSQLQuery("select distinct pg.patient_id from patient_program pg "
 		// + "inner join obs ob on pg.patient_id = ob.person_id "
@@ -8261,7 +8262,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -8399,7 +8400,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		double val = 0;
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -8539,7 +8540,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -8711,7 +8712,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		//
 		// Date newStartDate = df.parse(startDate);
 		//
-		// Session session = getSessionFactory().getCurrentSession();
+		// DbSession session = getSessionFactory().getCurrentSession();
 		// SQLQuery query = session
 		// .createSQLQuery("select distinct pg.patient_id from patient_program pg "
 		// + "inner join obs ob on pg.patient_id = ob.person_id "
@@ -8794,7 +8795,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -8910,7 +8911,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
 							+ "inner join obs ob on pe.person_id = ob.person_id "
@@ -9058,7 +9059,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -9216,7 +9217,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -9368,7 +9369,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -9459,7 +9460,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
 							+ "inner join obs ob on pe.person_id = ob.person_id "
@@ -9564,7 +9565,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
 							+ "inner join obs ob on pe.person_id = ob.person_id "
@@ -9654,7 +9655,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -9838,7 +9839,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -9951,7 +9952,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -10072,7 +10073,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -10241,7 +10242,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
@@ -10339,7 +10340,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
@@ -10502,7 +10503,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		// try {
 		//
-		// Session session = getSessionFactory().getCurrentSession();
+		// DbSession session = getSessionFactory().getCurrentSession();
 		// SQLQuery query = session
 		// .createSQLQuery("select distinct rel.person_a from relationship rel "
 		// + "inner join person pe on rel.person_a = pe.person_id "
@@ -10628,7 +10629,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		// try {
 		//
-		// Session session = getSessionFactory().getCurrentSession();
+		// DbSession session = getSessionFactory().getCurrentSession();
 		// SQLQuery query = session
 		// .createSQLQuery("select distinct rel.person_a from relationship rel "
 		// + "inner join person pe on rel.person_a = pe.person_id "
@@ -10785,7 +10786,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -10968,7 +10969,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		ArrayList<Integer> patientsNotLostToFollowUp = new ArrayList<Integer>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -11412,7 +11413,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -11790,7 +11791,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -12153,7 +12154,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -12513,7 +12514,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -12873,7 +12874,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -13330,7 +13331,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -13787,7 +13788,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -14265,7 +14266,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -14626,7 +14627,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -14817,7 +14818,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -14999,7 +15000,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleWithHIVPosIds = session
 					.createSQLQuery(
@@ -15068,7 +15069,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		// TODO Auto-generated method stub
 		int indicator = 0;
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personFemaleWithHIVPosIds = session
 					.createSQLQuery(
 							"SELECT distinct p.person_id from person p inner join obs o on p.person_id=o.person_id where p.gender='F' and  o.concept_id='"
@@ -15141,7 +15142,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personFemaleWithHIVPosIds = session
 					.createSQLQuery(
 							"SELECT distinct p.person_id from person p inner join obs o on p.person_id=o.person_id where p.gender='F' and  o.concept_id='"
@@ -15226,7 +15227,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personFemaleWithHIVPosIds = session
 					.createSQLQuery(
 							"SELECT distinct p.person_id from person p inner join obs o on p.person_id=o.person_id where p.gender='F' and  o.concept_id='"
@@ -15307,7 +15308,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personFemaleWithHIVPosIds = session
 					.createSQLQuery(
 							"SELECT distinct p.person_id from person p inner join obs o on p.person_id=o.person_id where p.gender='F' and  o.concept_id='"
@@ -15366,7 +15367,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personCoupledIds = session
 					.createSQLQuery(
@@ -15406,7 +15407,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> coupleCounseledTestedIds = session
 					.createSQLQuery(
@@ -15464,7 +15465,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -15521,7 +15522,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -15586,7 +15587,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
 							"SELECT distinct pe.person_id from person pe inner join obs o on pe.person_id=o.person_id WHERE DATEDIFF('"
@@ -15641,7 +15642,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
 							"SELECT distinct pe.person_id from person pe inner join obs o on pe.person_id=o.person_id WHERE DATEDIFF('"
@@ -15699,7 +15700,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
 							"SELECT distinct pe.person_id from person pe inner join obs o on pe.person_id=o.person_id WHERE DATEDIFF('"
@@ -15759,7 +15760,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
 							"SELECT distinct pe.person_id from person pe inner join obs o on pe.person_id=o.person_id WHERE DATEDIFF('"
@@ -15819,7 +15820,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -15878,7 +15879,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 			String endDate) {
 		int indicator = 0;
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -15937,7 +15938,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -15989,7 +15990,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -16045,7 +16046,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -16098,7 +16099,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -16152,7 +16153,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
@@ -16214,7 +16215,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
@@ -16270,7 +16271,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
@@ -16335,7 +16336,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		int indicator = 0;
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
 							"SELECT distinct pe.person_id from person pe inner join obs o on pe.person_id=o.person_id WHERE DATEDIFF('"
@@ -16390,7 +16391,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
@@ -16445,7 +16446,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
 							"SELECT distinct pe.person_id from person pe inner join obs o on pe.person_id=o.person_id WHERE DATEDIFF('"
@@ -16505,7 +16506,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -16560,7 +16561,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -16623,7 +16624,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -16683,7 +16684,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -16733,7 +16734,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -16790,7 +16791,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -16845,7 +16846,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
@@ -16896,7 +16897,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -16952,7 +16953,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personFemaleIds = session
 					.createSQLQuery(
@@ -17004,7 +17005,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
@@ -17060,7 +17061,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
@@ -17120,7 +17121,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
@@ -17181,7 +17182,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
 							"SELECT distinct pe.person_id from person pe inner join obs o on pe.person_id=o.person_id WHERE DATEDIFF('"
@@ -17232,7 +17233,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
@@ -17290,7 +17291,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
@@ -17344,7 +17345,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
@@ -17396,7 +17397,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
@@ -17455,7 +17456,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		// TODO Auto-generated method stub
 		int indicator = 0;
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personMaleIds = session
 					.createSQLQuery(
@@ -17511,7 +17512,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			List<Integer> personEnrolledInPepIds = session
 					.createSQLQuery(
@@ -17599,7 +17600,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personEnrolledInPepPRogramAtRiskOfOcupationExposureIds = session
 					.createSQLQuery(
 							"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -17675,7 +17676,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 			String endDate) {
 		int indicator = 0;
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personEnrolledInPepPRogramAtRiskOfOcupationExposureIds = session
 					.createSQLQuery(
 							"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -17770,7 +17771,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 			String endDate) {
 		int indicator = 0;
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personEnrolledInPepPRogramAtRiskOfNonOcupationExposureIds = session
 					.createSQLQuery(
 							"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -17845,7 +17846,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 			String endDate) {
 		int indicator = 0;
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personEnrolledInPepPRogramAtRiskOfNonOcuppationalExposureIds = session
 					.createSQLQuery(
 							"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -17932,7 +17933,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		int indicator = 0;
 
 		try {
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personEnrolledInPepPRogramAtRiskOfOcupationExposureIds = session
 					.createSQLQuery(
 							"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -18008,7 +18009,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> patientInProgramIds = session
 					.createSQLQuery(
 							"SELECT DISTINCT p.person_id from person p inner join obs o on p.person_id=o.person_id where p.voided=false and o.concept_id='"
@@ -18051,7 +18052,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			List<Integer> personEnrolledInPepPRogramAtRiskOfRapeAssaultIds = session
 					.createSQLQuery(
 							"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -18154,7 +18155,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -18295,7 +18296,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -18395,7 +18396,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join person pe on pg.patient_id = pe.person_id "
@@ -18479,7 +18480,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -18565,7 +18566,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -18652,7 +18653,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -18748,7 +18749,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -18880,7 +18881,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -19012,7 +19013,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -19165,7 +19166,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -19275,7 +19276,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -19383,7 +19384,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -19492,7 +19493,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -19605,7 +19606,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -19719,7 +19720,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -19804,7 +19805,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -19886,7 +19887,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 			String filename, String title, String startDate, String endDate)
 			throws IOException {
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		ServletOutputStream outputStream = response.getOutputStream();
 		response.setContentType("text/plain");
 		response.setHeader("Content-Disposition", "attachment; filename=\""
@@ -19940,7 +19941,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		log.info("exporttttttttttttttttttttttttttttttttttttt" + patientsList);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Content-Disposition", "attachment; filename=\""
@@ -20034,7 +20035,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -20196,7 +20197,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -20334,7 +20335,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -20431,7 +20432,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -20580,7 +20581,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -20716,7 +20717,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -20823,7 +20824,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -20918,7 +20919,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -21014,7 +21015,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query1 = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -21157,7 +21158,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newEndDate = df.parse(endDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
@@ -21297,7 +21298,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -21404,7 +21405,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -21502,7 +21503,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		ArrayList<Person> patients = new ArrayList<Person>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -21646,7 +21647,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date oneYearBeforeEndDate = df.parse(addDaysToDate(endDate, -12));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -21810,7 +21811,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newEndDate = df.parse(endDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -21948,7 +21949,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newEndDate = df.parse(endDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -22090,7 +22091,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date oneYearBeforeEndDate = df.parse(addDaysToDate(endDate, -12));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -22254,7 +22255,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -22392,7 +22393,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -22530,7 +22531,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -22668,7 +22669,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -22806,7 +22807,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -22944,7 +22945,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -23083,7 +23084,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -23188,7 +23189,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -23293,7 +23294,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -23397,7 +23398,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -23501,7 +23502,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -23641,7 +23642,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -23749,7 +23750,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -23852,7 +23853,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -23990,7 +23991,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -24128,7 +24129,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -24267,7 +24268,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -24406,7 +24407,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -24567,7 +24568,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -24705,7 +24706,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -24843,7 +24844,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery query1 = session
@@ -24990,7 +24991,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -25099,7 +25100,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -25274,7 +25275,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		//
 		// Date newStartDate = df.parse(startDate);
 		//
-		// Session session = getSessionFactory().getCurrentSession();
+		// DbSession session = getSessionFactory().getCurrentSession();
 		//
 		// double weight;
 		//
@@ -25528,7 +25529,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		List<Integer> patientIdsList = new ArrayList<Integer>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -25717,7 +25718,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -25908,7 +25909,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
 							+ "inner join obs ob on pe.person_id = ob.person_id "
@@ -26046,7 +26047,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		// try {
 		//
-		// Session session = getSessionFactory().getCurrentSession();
+		// DbSession session = getSessionFactory().getCurrentSession();
 		// SQLQuery query = session
 		// .createSQLQuery("select distinct pg.patient_id from patient_program pg "
 		// + "inner join obs ob on pg.patient_id = ob.person_id "
@@ -26192,7 +26193,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -26337,7 +26338,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		List<Integer> patientIdsList = new ArrayList<Integer>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -26478,7 +26479,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -26655,7 +26656,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		//
 		// Date newStartDate = df.parse(startDate);
 		//
-		// Session session = getSessionFactory().getCurrentSession();
+		// DbSession session = getSessionFactory().getCurrentSession();
 		// SQLQuery query = session
 		// .createSQLQuery("select distinct pg.patient_id from patient_program pg "
 		// + "inner join obs ob on pg.patient_id = ob.person_id "
@@ -26745,7 +26746,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -26863,7 +26864,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
 							+ "inner join obs ob on pe.person_id = ob.person_id "
@@ -27011,7 +27012,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -27172,7 +27173,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -27327,7 +27328,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -27420,7 +27421,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
 							+ "inner join obs ob on pe.person_id = ob.person_id "
@@ -27527,7 +27528,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
 							+ "inner join obs ob on pe.person_id = ob.person_id "
@@ -27619,7 +27620,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -27807,7 +27808,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -27924,7 +27925,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -28050,7 +28051,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		Date newStartDate = df.parse(startDate);
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -28223,7 +28224,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
@@ -28329,7 +28330,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery query = session
 					.createSQLQuery("select distinct pe.person_id from person pe "
@@ -28494,7 +28495,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		// try {
 		//
-		// Session session = getSessionFactory().getCurrentSession();
+		// DbSession session = getSessionFactory().getCurrentSession();
 		// SQLQuery query = session
 		// .createSQLQuery("select distinct rel.person_a from relationship rel "
 		// + "inner join person pe on rel.person_a = pe.person_id "
@@ -28611,7 +28612,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		// try {
 		//
-		// Session session = getSessionFactory().getCurrentSession();
+		// DbSession session = getSessionFactory().getCurrentSession();
 		// SQLQuery query = session
 		// .createSQLQuery("select distinct rel.person_a from relationship rel "
 		// + "inner join person pe on rel.person_a = pe.person_id "
@@ -28728,7 +28729,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		// try {
 		//
-		// Session session = getSessionFactory().getCurrentSession();
+		// DbSession session = getSessionFactory().getCurrentSession();
 		// SQLQuery query = session
 		// .createSQLQuery("select distinct rel.person_a from relationship rel "
 		// + "inner join person pe on rel.person_a = pe.person_id "
@@ -28867,7 +28868,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -29056,7 +29057,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		ArrayList<Integer> patientsNotLostToFollowUp = new ArrayList<Integer>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -29505,7 +29506,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -29888,7 +29889,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -30255,7 +30256,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -30622,7 +30623,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -30990,7 +30991,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -31451,7 +31452,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -31915,7 +31916,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -32399,7 +32400,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -32765,7 +32766,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -32959,7 +32960,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 							+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -33143,7 +33144,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> womenHivPosExpectedFpAtFacilityList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleWithHIVPosIds = session
 				.createSQLQuery(
@@ -33210,7 +33211,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	@Override
 	public List<Person> womenHivPosSeenInFpList(String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleWithHIVPosIds = session
 				.createSQLQuery(
@@ -33280,7 +33281,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> womenHivPosPartnersSeenInFpList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		List<Integer> personFemaleWithHIVPosIds = session
 				.createSQLQuery(
 						"SELECT distinct p.person_id from person p inner join obs o on p.person_id=o.person_id where p.gender='F' and  o.concept_id='"
@@ -33362,7 +33363,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> womenHivPosReceivingModernContraceptiveList(
 			String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		List<Integer> personFemaleWithHIVPosIds = session
 				.createSQLQuery(
 						"SELECT distinct p.person_id from person p inner join obs o on p.person_id=o.person_id where p.gender='F' and  o.concept_id='"
@@ -33438,7 +33439,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> womenHivPosRefferedForFpList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		List<Integer> personFemaleWithHIVPosIds = session
 				.createSQLQuery(
 						"SELECT distinct p.person_id from person p inner join obs o on p.person_id=o.person_id where p.gender='F' and  o.concept_id='"
@@ -33494,7 +33495,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> couplesCounseledTestedList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personCoupledIds = session
 				.createSQLQuery(
@@ -33530,7 +33531,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	@Override
 	public List<Person> discordantCouples2List(String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> coupleCounseledTestedIds = session
 				.createSQLQuery(
@@ -33593,7 +33594,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> femaleHivPosMoreThan25List(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -33648,7 +33649,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> femaleHivPosUnder15to24List(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
 						"SELECT distinct pe.person_id from person pe inner join obs o on pe.person_id=o.person_id WHERE DATEDIFF('"
@@ -33709,7 +33710,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> femaleHivPosUnderFifteenList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -33764,7 +33765,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> maleHivPosMoreThan25List(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -33820,7 +33821,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> maleHivPosUnder15to24List(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -33880,7 +33881,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> maleHivPosUnderFifteenList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -33938,7 +33939,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> newFemale15To24TestReceiveResList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -33996,7 +33997,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> newFemaleFifteenTo24CounseledTestedList(
 			String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -34051,7 +34052,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> newFemaleMore25CounseledTestedList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -34100,7 +34101,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> newFemaleMore25TestReceiveResList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -34153,7 +34154,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> newFemaleUnderFifteenCounseledTestedList(
 			String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -34202,7 +34203,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> newFemaleUnderFifteenTestReceiveResList(
 			String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -34255,7 +34256,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> newMale15To24TestReceiveResList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -34313,7 +34314,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> newMaleFifteenTo24CounseledTestedList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -34366,7 +34367,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> newMaleMore25CounseledTestedList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -34417,7 +34418,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> newMaleMore25TestReceiveResList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -34471,7 +34472,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> newMaleUnderFifteenCounseledTestedList(
 			String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -34522,7 +34523,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> newMaleUnderFifteenTestReceiveResList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -34579,7 +34580,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> female15To24CounseledThroughPitList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -34632,7 +34633,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> female15To24HivPosThroughPitList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -34692,7 +34693,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> female15To24HivResThroughPitList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -34750,7 +34751,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> femaleMoreThan25CounseledThroughPitList(
 			String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -34799,7 +34800,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> femaleMoreThan25HivPosThroughPitList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -34854,7 +34855,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> femaleMoreThan25HivResThroughPitList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -34907,7 +34908,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> femaleUnderFifteenCounseledThroughPitList(
 			String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -34956,7 +34957,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> femaleUnderFifteenHivPosThroughPitList(
 			String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -35011,7 +35012,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> femaleUnderFifteenHivResThroughPitList(
 			String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personFemaleIds = session
 				.createSQLQuery(
@@ -35062,7 +35063,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> male15To24CounseledThroughPitList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -35115,7 +35116,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> male15To24HivPosThroughPitList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -35178,7 +35179,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> male15To24HivResThroughPitList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -35236,7 +35237,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> maleMoreThan25CounseledThroughPitList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -35285,7 +35286,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> maleMoreThan25HivPosThroughPitList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -35341,7 +35342,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> maleMoreThan25HivResThroughPitList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -35393,7 +35394,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> maleUnderFifteenCounseledThroughPitList(
 			String startDate, String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -35442,7 +35443,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> maleUnderFifteenHivPosThroughPitList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -35498,7 +35499,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> maleUnderFifteenHivResThroughPitList(String startDate,
 			String endDate) {
 		List<Person> persons = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personMaleIds = session
 				.createSQLQuery(
@@ -35551,7 +35552,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 	public List<Person> newAtRiskHivOccupExpo3MonthAfterPepList(
 			String startDate, String endDate) {
 		List<Person> patients = new ArrayList<Person>();
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		List<Integer> personEnrolledInPepIds = session
 				.createSQLQuery(
@@ -35639,7 +35640,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 			String endDate) {
 		ArrayList<Person> patients = new ArrayList<Person>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		List<Integer> personEnrolledInPepPRogramAtRiskOfOcupationExposureIds = session
 				.createSQLQuery(
 						"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -35716,7 +35717,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 			String endDate) {
 		ArrayList<Person> patients = new ArrayList<Person>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		List<Integer> personEnrolledInPepPRogramAtRiskOfOcupationExposureIds = session
 				.createSQLQuery(
 						"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -35811,7 +35812,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 			String startDate, String endDate) {
 		ArrayList<Person> patients = new ArrayList<Person>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		List<Integer> personEnrolledInPepPRogramAtRiskOfNonOcupationExposureIds = session
 				.createSQLQuery(
 						"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -35888,7 +35889,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 			String startDate, String endDate) {
 		ArrayList<Person> patients = new ArrayList<Person>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		List<Integer> personEnrolledInPepPRogramAtRiskOfNonOcuppationalExposureIds = session
 				.createSQLQuery(
 						"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -35975,7 +35976,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 			String endDate) {
 		ArrayList<Person> patients = new ArrayList<Person>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		List<Integer> personEnrolledInPepPRogramAtRiskOfOcupationExposureIds = session
 				.createSQLQuery(
 						"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -36048,7 +36049,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 		 * beforeThreeMonthOfStartDate=cal.getTime();
 		 */
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		List<Integer> patientInProgramIds = session
 				.createSQLQuery(
 						"SELECT DISTINCT p.person_id from person p inner join obs o on p.person_id=o.person_id where p.voided=false and o.concept_id='"
@@ -36089,7 +36090,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 			String endDate) {
 		ArrayList<Person> patients = new ArrayList<Person>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		List<Integer> personEnrolledInPepPRogramAtRiskOfRapeAssaultIds = session
 				.createSQLQuery(
 						"SELECT DISTINCT pp.patient_id FROM patient_program pp INNER JOIN patient pat ON pat.patient_id = pp.patient_id ")
@@ -36185,7 +36186,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		/* try { */
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		SQLQuery query1 = session
 				.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -36328,7 +36329,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -36481,7 +36482,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -36639,7 +36640,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -36797,7 +36798,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date threeMonthsBeforeEndDate = df.parse(addDaysToDate(endDate, -3));
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -36954,7 +36955,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -37065,7 +37066,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -37182,7 +37183,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		ArrayList<Integer> patientsNotLostToFollowUp = new ArrayList<Integer>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -37336,7 +37337,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		ArrayList<Integer> patientsNotLostToFollowUp = new ArrayList<Integer>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -37493,7 +37494,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -37613,7 +37614,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -37736,7 +37737,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -37845,7 +37846,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -37965,7 +37966,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		ArrayList<Integer> patientsNotLostToFollowUp = new ArrayList<Integer>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -38131,7 +38132,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		ArrayList<Integer> patientsNotLostToFollowUp = new ArrayList<Integer>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -38297,7 +38298,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		ArrayList<Integer> patientsNotLostToFollowUp = new ArrayList<Integer>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -38509,7 +38510,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		ArrayList<Integer> patientsNotLostToFollowUp = new ArrayList<Integer>();
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 
@@ -38716,7 +38717,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		/* try { */
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		SQLQuery query = session
 				.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 						+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -38843,7 +38844,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		/* try { */
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 		SQLQuery query = session
 				.createSQLQuery("select distinct pg.patient_id from patient_program pg "
 						+ "inner join obs ob on pg.patient_id = ob.person_id "
@@ -38969,7 +38970,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -39226,7 +39227,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 			SQLQuery query = session
 					.createSQLQuery("select distinct rel.person_a from relationship rel "
 							+ "inner join person pe on rel.person_a = pe.person_id "
@@ -39485,7 +39486,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery queryPatientsOnCotrimo = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -39638,7 +39639,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery queryPatientsOnCotrimo = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -39794,7 +39795,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery queryPatientsOnCotrimo = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -39948,7 +39949,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		try {
 
-			Session session = getSessionFactory().getCurrentSession();
+			DbSession session = getSessionFactory().getCurrentSession();
 
 			SQLQuery queryPatientsOnCotrimo = session
 					.createSQLQuery("select distinct pg.patient_id from patient_program pg "
@@ -40101,7 +40102,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery queryPatientsOnCotrimo = session
@@ -40201,7 +40202,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery queryPatientsOnCotrimo = session
@@ -40300,7 +40301,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery queryPatientsOnCotrimo = session
@@ -40400,7 +40401,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 
 		Date newStartDate = df.parse(startDate);
 
-		Session session = getSessionFactory().getCurrentSession();
+		DbSession session = getSessionFactory().getCurrentSession();
 
 		try {
 			SQLQuery queryPatientsOnCotrimo = session
