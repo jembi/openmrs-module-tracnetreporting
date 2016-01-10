@@ -15,8 +15,8 @@
 		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
 			<props>
-				<prop key="module/@MODULE_ID@/tracnetreportingForm.list">tracnetreportingFormController</prop>
-				<prop key="module/@MODULE_ID@/tracnetpatientList.list">tracnetpatientViewController</prop>
+				<prop key="module/tracnetreporting/tracnetreportingForm.list">tracnetreportingFormController</prop>
+				<prop key="module/tracnetreporting/tracnetpatientList.list">tracnetpatientViewController</prop>
 			</props>
 		</property>
 	</bean>
@@ -24,25 +24,25 @@
 
 	<!--
 		<bean id="tracnetreportingFormController"
-		class="@MODULE_PACKAGE@.web.controller.TracNetReportingViewController">
+		class="org.openmrs.module.tracnetreporting.web.controller.TracNetReportingViewController">
 		<property name="commandName"> <value>indicatorsList</value>
 		</property> <property name="formView">
-		<value>/module/@MODULE_ID@/tracnetreportingForm</value> </property>
+		<value>/module/tracnetreporting/tracnetreportingForm</value> </property>
 		<property name="successView"> <value>tracnetreportingForm.list</value>
 		</property> </bean>
 	-->
 
 	<bean id="tracnetreportingFormController"
-		class="@MODULE_PACKAGE@.web.controller.TracNetReportingFormController">
-		<property name="viewName" value="module/@MODULE_ID@/tracnetreportingForm" />
+		class="org.openmrs.module.tracnetreporting.web.controller.TracNetReportingFormController">
+		<property name="viewName" value="module/tracnetreporting/tracnetreportingForm" />
 	</bean>
 	
 	<bean id="tracnetpatientViewController"
-		class="@MODULE_PACKAGE@.web.controller.TracNetPatientViewController">
-		<property name="viewName" value="module/@MODULE_ID@/tracnetpatientsList" />
+		class="org.openmrs.module.tracnetreporting.web.controller.TracNetPatientViewController">
+		<property name="viewName" value="module/tracnetreporting/tracnetpatientsList" />
 	</bean>
 
-	<bean class="@MODULE_PACKAGE@.service.ContextProvider" />
+	<bean class="org.openmrs.module.tracnetreporting.service.ContextProvider" />
 
 	<!-- /Controllers -->
 </beans>

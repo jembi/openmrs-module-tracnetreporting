@@ -24,7 +24,7 @@
 	<bean parent="serviceContext">
 		<property name="moduleService">
 			<list>
-				<value>@MODULE_PACKAGE@.service.TracNetIndicatorService</value>
+				<value>org.openmrs.module.tracnetreporting.service.TracNetIndicatorService</value>
 				<bean
 					class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 					<property name="transactionManager">
@@ -50,7 +50,7 @@
 				</bean>
 				
 				<!--
-				<value>@MODULE_PACKAGE@.service.TracNetPatientService</value>
+				<value>org.openmrs.module.tracnetreporting.service.TracNetPatientService</value>
 				<bean
 					class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 					<property name="transactionManager">

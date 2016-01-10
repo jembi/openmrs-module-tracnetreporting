@@ -268,7 +268,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 		// + " and pa.voided = false and en.voided = false and o.concept_id <> "
 		// + ConstantValues.REASON_FOR_EXITING_CARE
 		// + " and o.obs_datetime <= '" + endDate
-		// + "' and ord.start_date <= '" + endDate
+		// + "' and IFNULL(ord.date_activated, ord.scheduled_date) <= '" + endDate
 		// + "' and o.concept_id = "
 		// + ConstantValues.NEXT_SCHEDULED_VISIT
 		// + " and pg.program_id= "
@@ -349,11 +349,11 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 		// " AND pe.dead = FALSE AND pat.voided = FALSE  AND ord.concept_id IN "
 		// + ConstantValues.LIST_OF_ARV_DRUGS
 		// + " AND ord.voided = FALSE AND ord.void_reason IS NULL "
-		// + "AND (ord.start_date not between '"
+		// + "AND (IFNULL(ord.date_activated, ord.scheduled_date) not between '"
 		// + startDate
 		// + "' AND '"
 		// + endDate
-		// + "' OR ord.start_date > '"
+		// + "' OR IFNULL(ord.date_activated, ord.scheduled_date) > '"
 		// + endDate
 		// +
 		// "') AND ord.discontinued_date IS NULL AND ord.discontinued = FALSE");
@@ -392,11 +392,11 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 		// " AND per.dead = FALSE AND pat.voided = FALSE  AND ord.concept_id IN "
 		// + ConstantValues.LIST_OF_ARV_DRUGS
 		// + " AND ord.voided = FALSE AND ord.void_reason IS NULL "
-		// + "AND (ord.start_date not between '"
+		// + "AND (IFNULL(ord.date_activated, ord.scheduled_date) not between '"
 		// + startDate
 		// + "' AND '"
 		// + endDate
-		// + "' OR ord.start_date > '"
+		// + "' OR IFNULL(ord.date_activated, ord.scheduled_date) > '"
 		// + endDate
 		// +
 		// "') AND ord.discontinued_date IS NULL AND ord.discontinued = FALSE");
@@ -1170,7 +1170,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ "') - TO_DAYS(pe.birthdate)), '%Y')+0 < 2 "
 							+ " and d.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
-							+ ") and (cast(ord.start_date as DATE)) <= '"
+							+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -1191,7 +1191,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 								+ "inner join drug d on do.drug_inventory_id = d.drug_id "
 								+ "where d.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
-								+ ") and (cast(ord.start_date as DATE)) <= '"
+								+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.voided = 0 and pe.voided =0 and pa.voided = 0 and pg.patient_id="
@@ -1243,7 +1243,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 		 * "') - TO_DAYS(pe.birthdate)), '%Y')+0 <= 4 " +
 		 * " and d.concept_id IN (" +
 		 * GlobalProperties.gpGetListOfProphylaxisDrugs() +
-		 * ") and (cast(ord.start_date as DATE)) <= '" + endDate +
+		 * ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '" + endDate +
 		 * "' and pg.date_enrolled <= '" + endDate +
 		 * "' and pg.voided =0 and pe.voided =0 and pa.voided = 0 and pg.program_id = "
 		 * + Integer.parseInt(GlobalProperties .gpGetHIVProgramId()));
@@ -1260,7 +1260,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 		 * "inner join drug_order do on ord.order_id = do.order_id " +
 		 * "inner join drug d on do.drug_inventory_id = d.drug_id " +
 		 * "where d.concept_id IN (" + GlobalProperties.gpGetListOfARVsDrugs() +
-		 * ") and (cast(ord.start_date as DATE)) <= '" + endDate + "'" +
+		 * ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '" + endDate + "'" +
 		 * " and pg.voided = 0 and pe.voided = 0 and pa.voided = 0 and pg.patient_id="
 		 * + patientId);
 		 * 
@@ -1307,7 +1307,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ " and d.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") "
-							+ " and pe.gender = 'F' and (cast(ord.start_date as DATE)) <= '"
+							+ " and pe.gender = 'F' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -1328,7 +1328,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 								+ "inner join drug d on do.drug_inventory_id = d.drug_id "
 								+ "where d.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
-								+ ") and (cast(ord.start_date as DATE)) <= '"
+								+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.voided = 0 and pe.voided = 0 and pa.voided = 0 and pg.patient_id="
@@ -1381,7 +1381,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ " and d.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") "
-							+ " and pe.gender = 'M' and (cast(ord.start_date as DATE)) <= '"
+							+ " and pe.gender = 'M' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -1403,7 +1403,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 								+ "where d.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") "
-								+ " and (cast(ord.start_date as DATE)) <= '"
+								+ " and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.voided = 0 and pe.voided = 0 and pa.voided = 0 and pg.patient_id="
@@ -1455,7 +1455,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ " and pe.gender = 'F' and d.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") "
-							+ " and (cast(ord.start_date as DATE)) <= '"
+							+ " and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -1476,7 +1476,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 								+ "inner join drug d on do.drug_inventory_id = d.drug_id "
 								+ "where d.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
-								+ ") and (cast(ord.start_date as DATE)) <= '"
+								+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.voided = 0 and pe.voided = 0 and pa.voided = 0 and pg.patient_id="
@@ -1527,7 +1527,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ " and d.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") "
-							+ " and pe.gender = 'M' and (cast(ord.start_date as DATE)) <= '"
+							+ " and pe.gender = 'M' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -1548,7 +1548,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 								+ "inner join drug d on do.drug_inventory_id = d.drug_id "
 								+ "where d.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
-								+ ") and (cast(ord.start_date as DATE)) <= '"
+								+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.voided = 0 and pe.voided = 0 and pa.voided = 0 and pg.patient_id="
@@ -1611,7 +1611,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 						+ " inner join drug d on do.drug_inventory_id = d.drug_id "
 						+ " where ord.concept_id IN ("
 						+ GlobalProperties.gpGetListOfProphylaxisDrugs()
-						+ ") and (cast(ord.start_date as DATE)) <= '"
+						+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 						+ endDate
 						+ "' and pg.date_enrolled <= '"
 						+ endDate
@@ -1967,13 +1967,13 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 					{
 
 						SQLQuery queryMinStartDate = session
-								.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+								.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 										+ " inner join drug_order do on ord.order_id = do.order_id "
 										+ " inner join drug d on do.drug_inventory_id = d.drug_id "
 										+ " where ord.concept_id IN ("
 										+ GlobalProperties.gpGetListOfTBDrugs()
 										+ ") "
-										+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+										+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 										+ patientId);
 
 						List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -2092,13 +2092,13 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 
 					{
 						SQLQuery queryMinStartDate = session
-								.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+								.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 										+ " inner join drug_order do on ord.order_id = do.order_id "
 										+ " inner join drug d on do.drug_inventory_id = d.drug_id "
 										+ " where ord.concept_id IN ("
 										+ GlobalProperties.gpGetListOfTBDrugs()
 										+ ") "
-										+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+										+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 										+ patientId);
 
 						List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -2294,7 +2294,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ " and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ " and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -2422,7 +2422,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ "') - TO_DAYS(pe.birthdate)), '%Y')+0 <= 4 "
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
-							+ ") and (cast(ord.start_date as DATE)) <= '"
+							+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -2549,7 +2549,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ "') - TO_DAYS(pe.birthdate)), '%Y')+0 <= 14 "
 							+ " and pe.gender = 'F' and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
-							+ ") and (cast(ord.start_date as DATE)) <= '"
+							+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -2677,7 +2677,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ "') - TO_DAYS(pe.birthdate)), '%Y')+0 <= 14 "
 							+ " and pe.gender = 'M' and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
-							+ ") and (cast(ord.start_date as DATE)) <= '"
+							+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -2806,7 +2806,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ "') - TO_DAYS(pe.birthdate)), '%Y')+0 <= 14 "
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfFirstLineDrugs()
-							+ ") and (cast(ord.start_date as DATE)) <= '"
+							+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -2828,7 +2828,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfSecondLineDrugs()
 								+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ " and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ " and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -2958,7 +2958,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ "  and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfSecondLineDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ " and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ " and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -3087,7 +3087,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ " and pe.gender = 'F' and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ " and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ " and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -3215,7 +3215,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ "') - TO_DAYS(pe.birthdate)), '%Y')+0 >= 15 "
 							+ " and pe.gender = 'M' and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
-							+ ") and (cast(ord.start_date as DATE)) <= '"
+							+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -3343,7 +3343,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ "') - TO_DAYS(pe.birthdate)), '%Y')+0 >= 15 "
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfFirstLineDrugs()
-							+ ") and (cast(ord.start_date as DATE)) <= '"
+							+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -3365,7 +3365,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfSecondLineDrugs()
 								+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -3496,7 +3496,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ "') - TO_DAYS(pe.birthdate)), '%Y')+0 >= 15 "
 							+ "  and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfSecondLineDrugs()
-							+ ") and (cast(ord.start_date as DATE)) <= '"
+							+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -3627,9 +3627,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
-							+ " and (cast(ord.start_date as DATE)) >= '"
+							+ " and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -3653,13 +3653,13 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									+ " inner join drug d on do.drug_inventory_id = d.drug_id "
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -3723,9 +3723,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -3749,13 +3749,13 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									+ " inner join drug d on do.drug_inventory_id = d.drug_id "
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -3817,9 +3817,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -3843,13 +3843,13 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									+ " inner join drug d on do.drug_inventory_id = d.drug_id "
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -3913,9 +3913,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -3940,13 +3940,13 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									+ " inner join drug d on do.drug_inventory_id = d.drug_id "
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -4008,9 +4008,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -4039,7 +4039,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				{
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									+ " inner join drug d on do.drug_inventory_id = d.drug_id "
 									+ " where ord.concept_id IN ("
@@ -4148,9 +4148,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -4179,13 +4179,13 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				{
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									+ " inner join drug d on do.drug_inventory_id = d.drug_id "
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -4285,9 +4285,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -4316,13 +4316,13 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				{
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									+ " inner join drug d on do.drug_inventory_id = d.drug_id "
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -4421,9 +4421,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -4452,7 +4452,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				{
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -4461,7 +4461,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -4566,9 +4566,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -4597,7 +4597,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				{
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -4606,7 +4606,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -4712,9 +4712,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -4738,7 +4738,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -4747,7 +4747,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -4812,9 +4812,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -4838,7 +4838,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -4847,7 +4847,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -4916,9 +4916,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -4945,7 +4945,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -4954,7 +4954,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -5060,9 +5060,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -5089,7 +5089,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -5098,7 +5098,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -5203,9 +5203,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -5234,7 +5234,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				{
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -5243,7 +5243,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -5346,9 +5346,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -5376,7 +5376,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -5385,7 +5385,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -5486,9 +5486,9 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -5517,7 +5517,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 				{
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -5526,7 +5526,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -5632,7 +5632,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and ord.discontinued = 1 and pg.date_enrolled <= '"
 							+ endDate
@@ -5776,7 +5776,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and ord.discontinued = 1 and pg.date_enrolled <= '"
 							+ endDate
@@ -5917,7 +5917,7 @@ public class TracNetIndicatorServiceImpl implements TracNetIndicatorService {
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -6010,7 +6010,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -6100,7 +6100,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -6231,7 +6231,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -6363,9 +6363,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ df.format(oneYearBeforeStartDate)
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ df.format(oneYearBeforeEndDate)
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -6390,7 +6390,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -6399,7 +6399,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -6526,9 +6526,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ df.format(oneYearBeforeStartDate)
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ df.format(oneYearBeforeEndDate)
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -6553,7 +6553,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -6562,7 +6562,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -6687,7 +6687,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -6776,7 +6776,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -6866,7 +6866,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -6967,7 +6967,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -8490,7 +8490,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 												+ "where ord.concept_id IN ("
 												+ GlobalProperties
 														.gpGetListOfARVsDrugs()
-												+ ") and (cast(ord.start_date as DATE)) <= '"
+												+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 												+ endDate
 												+ "' and pg.program_id= "
 												+ Integer
@@ -8641,7 +8641,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 													.gpGetPositiveAsResultToHIVTestConceptId())) {
 
 										SQLQuery queryMinStartDate = session
-												.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+												.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 														+ " inner join drug_order do on ord.order_id = do.order_id "
 														/*
 														 * +
@@ -8651,7 +8651,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 														+ GlobalProperties
 																.gpGetListOfARVsDrugs()
 														+ ") "
-														+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+														+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 														+ patientId);
 
 										List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -18174,7 +18174,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							 */
 							+ "where ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
-							+ ") and (cast(ord.start_date as DATE)) <= '"
+							+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -18413,7 +18413,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and pe.gender = 'F' and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") "
-							+ " and (cast(ord.start_date as DATE)) <= '"
+							+ " and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -18437,7 +18437,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								 */
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
-								+ ") and (cast(ord.start_date as DATE)) <= '"
+								+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.voided = 0 and pe.voided = 0 and pa.voided = 0 and ord.voided = 0 and pg.patient_id="
@@ -18498,7 +18498,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") "
-							+ " and pe.gender = 'F' and (cast(ord.start_date as DATE)) <= '"
+							+ " and pe.gender = 'F' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -18522,7 +18522,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								 */
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
-								+ ") and (cast(ord.start_date as DATE)) <= '"
+								+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.voided = 0 and pe.voided = 0 and pa.voided = 0 and ord.voided = 0 and pg.patient_id="
@@ -18584,7 +18584,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") "
-							+ " and pe.gender = 'M' and (cast(ord.start_date as DATE)) <= '"
+							+ " and pe.gender = 'M' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -18608,7 +18608,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								 */
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
-								+ ") and (cast(ord.start_date as DATE)) <= '"
+								+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.voided = 0 and pe.voided = 0 and pa.voided = 0 and ord.voided = 0 and pg.patient_id="
@@ -18671,7 +18671,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") "
-							+ " and pe.gender = 'M' and (cast(ord.start_date as DATE)) <= '"
+							+ " and pe.gender = 'M' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -18696,7 +18696,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") "
-								+ " and (cast(ord.start_date as DATE)) <= '"
+								+ " and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.voided = 0 and pe.voided = 0 and pa.voided = 0 and ord.voided = 0 and pg.patient_id="
@@ -18801,7 +18801,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 					{
 
 						SQLQuery queryMinStartDate = session
-								.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+								.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 										+ " inner join drug_order do on ord.order_id = do.order_id "
 										/*
 										 * +
@@ -18810,7 +18810,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 										+ " where ord.concept_id IN ("
 										+ GlobalProperties.gpGetListOfTBDrugs()
 										+ ") "
-										+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+										+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 										+ patientId);
 
 						List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -18933,7 +18933,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 					{
 
 						SQLQuery queryMinStartDate = session
-								.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+								.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 										+ " inner join drug_order do on ord.order_id = do.order_id "
 										/*
 										 * +
@@ -18942,7 +18942,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 										+ " where ord.concept_id IN ("
 										+ GlobalProperties.gpGetListOfTBDrugs()
 										+ ") "
-										+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+										+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 										+ patientId);
 
 						List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -19737,7 +19737,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "') - TO_DAYS(pe.birthdate)), '%Y')+0 < 2 "
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
-							+ ") and (cast(ord.start_date as DATE)) <= '"
+							+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -19761,7 +19761,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								 */
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
-								+ ") and (cast(ord.start_date as DATE)) <= '"
+								+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.voided = 0 and pe.voided = 0 and pa.voided = 0 and ord.voided = 0 and pg.patient_id="
@@ -19822,7 +19822,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "') - TO_DAYS(pe.birthdate)), '%Y')+0 <= 4 "
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
-							+ ") and (cast(ord.start_date as DATE)) <= '"
+							+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -19846,7 +19846,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								 */
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
-								+ ") and (cast(ord.start_date as DATE)) <= '"
+								+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.voided = 0 and pe.voided = 0 and pa.voided = 0 and ord.voided = 0 and pg.patient_id="
@@ -20053,7 +20053,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfFirstLineDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -20078,7 +20078,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfSecondLineDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -20215,7 +20215,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "  and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfSecondLineDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -20354,7 +20354,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -20451,7 +20451,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and ord.discontinued = 1 and pg.date_enrolled <= '"
 							+ endDate
@@ -20599,7 +20599,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -20736,7 +20736,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -20843,7 +20843,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -20938,7 +20938,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -21034,7 +21034,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and ord.discontinued = 1 and pg.date_enrolled <= '"
 							+ endDate
@@ -21182,7 +21182,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -21319,7 +21319,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -21426,7 +21426,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -21524,7 +21524,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and pe.gender = 'F' and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ " and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ " and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -21664,9 +21664,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ df.format(oneYearBeforeStartDate)
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ df.format(oneYearBeforeEndDate)
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -21691,7 +21691,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -21700,7 +21700,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -21831,7 +21831,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and pe.gender = 'F' and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -21969,7 +21969,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and pe.gender = 'M' and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -22108,9 +22108,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ df.format(oneYearBeforeStartDate)
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ df.format(oneYearBeforeEndDate)
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -22135,7 +22135,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -22144,7 +22144,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -22275,7 +22275,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and pe.gender = 'M' and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -22414,9 +22414,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -22441,7 +22441,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				List<Integer> patientIds2 = query2.list();
 
 				SQLQuery queryMinStartDate = session
-						.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+						.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 								+ " inner join drug_order do on ord.order_id = do.order_id "
 								/*
 								 * +
@@ -22450,7 +22450,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ " where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") "
-								+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+								+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 								+ patientId);
 
 				List<Date> patientIdsMinStartDate = queryMinStartDate.list();
@@ -22552,9 +22552,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -22579,7 +22579,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				List<Integer> patientIds2 = query2.list();
 
 				SQLQuery queryMinStartDate = session
-						.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+						.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 								+ " inner join drug_order do on ord.order_id = do.order_id "
 								/*
 								 * +
@@ -22588,7 +22588,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ " where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") "
-								+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+								+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 								+ patientId);
 
 				List<Date> patientIdsMinStartDate = queryMinStartDate.list();
@@ -22690,9 +22690,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -22717,7 +22717,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				List<Integer> patientIds2 = query2.list();
 
 				SQLQuery queryMinStartDate = session
-						.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+						.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 								+ " inner join drug_order do on ord.order_id = do.order_id "
 								/*
 								 * +
@@ -22726,7 +22726,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ " where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") "
-								+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+								+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 								+ patientId);
 
 				List<Date> patientIdsMinStartDate = queryMinStartDate.list();
@@ -22828,9 +22828,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -22855,7 +22855,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				List<Integer> patientIds2 = query2.list();
 
 				SQLQuery queryMinStartDate = session
-						.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+						.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 								+ " inner join drug_order do on ord.order_id = do.order_id "
 								/*
 								 * +
@@ -22864,7 +22864,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ " where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") "
-								+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+								+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 								+ patientId);
 
 				List<Date> patientIdsMinStartDate = queryMinStartDate.list();
@@ -22966,9 +22966,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -22993,7 +22993,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				List<Integer> patientIds2 = query2.list();
 
 				SQLQuery queryMinStartDate = session
-						.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+						.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 								+ " inner join drug_order do on ord.order_id = do.order_id "
 								/*
 								 * +
@@ -23002,7 +23002,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ " where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") "
-								+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+								+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 								+ patientId);
 
 				List<Date> patientIdsMinStartDate = queryMinStartDate.list();
@@ -23104,9 +23104,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -23130,7 +23130,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -23139,7 +23139,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -23209,9 +23209,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -23235,7 +23235,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -23244,7 +23244,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -23314,9 +23314,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -23340,7 +23340,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -23349,7 +23349,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -23418,9 +23418,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -23444,7 +23444,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -23453,7 +23453,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -23523,9 +23523,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -23550,7 +23550,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				List<Integer> patientIds2 = query2.list();
 
 				SQLQuery queryMinStartDate = session
-						.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+						.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 								+ " inner join drug_order do on ord.order_id = do.order_id "
 								/*
 								 * +
@@ -23559,7 +23559,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ " where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") "
-								+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+								+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 								+ patientId);
 
 				List<Date> patientIdsMinStartDate = queryMinStartDate.list();
@@ -23662,9 +23662,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -23688,7 +23688,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -23697,7 +23697,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -23770,9 +23770,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -23796,7 +23796,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -23805,7 +23805,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 									+ " where ord.concept_id IN ("
 									+ GlobalProperties.gpGetListOfARVsDrugs()
 									+ ") "
-									+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -23874,9 +23874,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -23901,7 +23901,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				List<Integer> patientIds2 = query2.list();
 
 				SQLQuery queryMinStartDate = session
-						.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+						.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 								+ " inner join drug_order do on ord.order_id = do.order_id "
 								/*
 								 * +
@@ -23910,7 +23910,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ " where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") "
-								+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+								+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 								+ patientId);
 
 				List<Date> patientIdsMinStartDate = queryMinStartDate.list();
@@ -24012,9 +24012,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -24039,7 +24039,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				List<Integer> patientIds2 = query2.list();
 
 				SQLQuery queryMinStartDate = session
-						.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+						.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 								+ " inner join drug_order do on ord.order_id = do.order_id "
 								/*
 								 * +
@@ -24150,9 +24150,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -24177,7 +24177,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				List<Integer> patientIds2 = query2.list();
 
 				SQLQuery queryMinStartDate = session
-						.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+						.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 								+ " inner join drug_order do on ord.order_id = do.order_id "
 								/*
 								 * +
@@ -24186,7 +24186,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ " where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") "
-								+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+								+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 								+ patientId);
 
 				List<Date> patientIdsMinStartDate = queryMinStartDate.list();
@@ -24289,9 +24289,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") "
 							+ "and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and o.concept_id = "
 							+ Integer.parseInt(GlobalProperties
@@ -24316,7 +24316,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				List<Integer> patientIds2 = query2.list();
 
 				SQLQuery queryMinStartDate = session
-						.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+						.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 								+ " inner join drug_order do on ord.order_id = do.order_id "
 								/*
 								 * +
@@ -24325,7 +24325,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ " where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") "
-								+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+								+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 								+ patientId);
 
 				List<Date> patientIdsMinStartDate = queryMinStartDate.list();
@@ -24427,7 +24427,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfFirstLineDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -24452,7 +24452,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfSecondLineDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -24588,7 +24588,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "  and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfSecondLineDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -24726,7 +24726,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -24863,7 +24863,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -26425,7 +26425,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 												+ "where ord.concept_id IN ("
 												+ GlobalProperties
 														.gpGetListOfARVsDrugs()
-												+ ") and (cast(ord.start_date as DATE)) <= '"
+												+ ") and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 												+ endDate
 												+ "' and pg.program_id= "
 												+ Integer
@@ -26579,7 +26579,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 													.gpGetPositiveAsResultToHIVTestConceptId())) {
 
 										SQLQuery queryMinStartDate = session
-												.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+												.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 														+ " inner join drug_order do on ord.order_id = do.order_id "
 														/*
 														 * +
@@ -26589,7 +26589,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 														+ GlobalProperties
 																.gpGetListOfARVsDrugs()
 														+ ") "
-														+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+														+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 														+ patientId);
 
 										List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -36349,7 +36349,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -36374,7 +36374,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -36502,7 +36502,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -36527,7 +36527,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -36660,7 +36660,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -36685,7 +36685,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -36818,7 +36818,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ " and ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -36843,7 +36843,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -36973,7 +36973,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "where ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -37007,7 +37007,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -37084,7 +37084,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "where ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -37118,7 +37118,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -37200,7 +37200,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "where ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -37225,7 +37225,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -37354,7 +37354,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "where ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -37379,7 +37379,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -37512,7 +37512,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "where ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -37544,7 +37544,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -37632,7 +37632,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "where ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -37664,7 +37664,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -37755,7 +37755,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "where ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -37786,7 +37786,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -37864,7 +37864,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "where ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and o.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+							+ "and pa.voided = 0 and o.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.date_enrolled <= '"
 							+ endDate
@@ -37895,7 +37895,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -37983,7 +37983,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "where ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) < '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) < '"
 							+ startDate
 							+ "' and pg.date_enrolled < '"
 							+ startDate
@@ -38149,7 +38149,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "where ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfARVsDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) < '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) < '"
 							+ startDate
 							+ "' and pg.date_enrolled < '"
 							+ startDate
@@ -38315,7 +38315,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "where ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) < '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) < '"
 							+ startDate
 							+ "' and pg.date_enrolled < '"
 							+ startDate
@@ -38340,7 +38340,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) < '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) < '"
 								+ startDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -38437,9 +38437,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				// + GlobalProperties.gpGetListOfARVsDrugs()
 				// +
 				// ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-				// + "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+				// + "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 				// + startDate
-				// + "'and (cast(ord.start_date as DATE)) <= '"
+				// + "'and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 				// + endDate
 				// + "' and pg.date_enrolled <= '"
 				// + endDate
@@ -38527,7 +38527,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ "where ord.concept_id IN ("
 							+ GlobalProperties.gpGetListOfProphylaxisDrugs()
 							+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) < '"
+							+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) < '"
 							+ startDate
 							+ "' and pg.date_enrolled < '"
 							+ startDate
@@ -38552,7 +38552,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) < '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) < '"
 								+ startDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -38649,9 +38649,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				// + GlobalProperties.gpGetListOfARVsDrugs()
 				// +
 				// ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-				// + "and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+				// + "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 				// + startDate
-				// + "'and (cast(ord.start_date as DATE)) <= '"
+				// + "'and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 				// + endDate
 				// + "' and pg.date_enrolled <= '"
 				// + endDate
@@ -38785,14 +38785,14 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 										.gpGetPositiveAsResultToHIVTestConceptId())) {
 
 							SQLQuery queryMinStartDate = session
-									.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+									.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 											+ " inner join drug_order do on ord.order_id = do.order_id "
 
 											+ " where ord.concept_id IN ("
 											+ GlobalProperties
 													.gpGetListOfProphylaxisDrugs()
 											+ ") "
-											+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+											+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 											+ patientId);
 
 							List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -38912,14 +38912,14 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 										.gpGetPositiveAsResultToHIVTestConceptId())) {
 
 							SQLQuery queryMinStartDate = session
-									.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+									.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 											+ " inner join drug_order do on ord.order_id = do.order_id "
 											+ " inner join drug d on do.drug_inventory_id = d.drug_id "
 											+ " where d.concept_id IN ("
 											+ GlobalProperties
 													.gpGetListOfProphylaxisDrugs()
 											+ ") "
-											+ " and (select (cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+											+ " and (select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 											+ patientId);
 
 							List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -39527,7 +39527,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ " where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -39680,7 +39680,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -39836,7 +39836,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -39990,7 +39990,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 								+ "where ord.concept_id IN ("
 								+ GlobalProperties.gpGetListOfARVsDrugs()
 								+ ") and ord.discontinued = 0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-								+ "and pa.voided = 0 and (cast(ord.start_date as DATE)) <= '"
+								+ "and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 								+ endDate
 								+ "'"
 								+ " and pg.patient_id="
@@ -40122,9 +40122,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfSecondLineDrugs()
 							+ ") "
 							+ " and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ " and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ " and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -40149,7 +40149,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -40159,7 +40159,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 									+ GlobalProperties
 											.gpGetListOfSecondLineDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -40222,9 +40222,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfSecondLineDrugs()
 							+ ") "
 							+ " and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ " and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ " and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -40249,7 +40249,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -40259,7 +40259,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 									+ GlobalProperties
 											.gpGetListOfSecondLineDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -40321,9 +40321,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfSecondLineDrugs()
 							+ ") "
 							+ " and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ " and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ " and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -40348,7 +40348,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -40358,7 +40358,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 									+ GlobalProperties
 											.gpGetListOfSecondLineDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
@@ -40421,9 +40421,9 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 							+ GlobalProperties.gpGetListOfSecondLineDrugs()
 							+ ") "
 							+ " and ord.discontinued=0 and pg.voided = 0 and pe.voided = 0 and ord.voided = 0 "
-							+ " and pa.voided = 0 and (cast(ord.start_date as DATE)) >= '"
+							+ " and pa.voided = 0 and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) >= '"
 							+ startDate
-							+ "' and (cast(ord.start_date as DATE)) <= '"
+							+ "' and (cast(IFNULL(ord.date_activated, ord.scheduled_date) as DATE)) <= '"
 							+ endDate
 							+ "' and pg.program_id= "
 							+ Integer.parseInt(GlobalProperties
@@ -40448,7 +40448,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 				if (patientIds2.size() == 0) {
 
 					SQLQuery queryMinStartDate = session
-							.createSQLQuery("select (cast(min(ord.start_date)as Date)) from orders ord "
+							.createSQLQuery("select (cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date)) from orders ord "
 									+ " inner join drug_order do on ord.order_id = do.order_id "
 									/*
 									 * +
@@ -40458,7 +40458,7 @@ log.info(">>>>>>>>>>>>>>>>>>>>>arvped died"+query1.toString());
 									+ GlobalProperties
 											.gpGetListOfSecondLineDrugs()
 									+ ") "
-									+ " and (select(cast(min(ord.start_date)as Date))) is not null and ord.voided = 0 and ord.patient_id = "
+									+ " and (select(cast(min(IFNULL(ord.date_activated, ord.scheduled_date))as Date))) is not null and ord.voided = 0 and ord.patient_id = "
 									+ patientId);
 
 					List<Date> patientIdsMinStartDate = queryMinStartDate
